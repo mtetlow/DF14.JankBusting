@@ -1,0 +1,64 @@
+<apex:page docType="html-5.0" standardStylesheets="false" showHeader="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false">
+	<html>
+	  <head>
+	    <meta charset="utf-8"/>
+	    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width"/>
+	    <title>Scroll chunky demo</title>
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js" />
+	    <style type="text/css">
+		    .block{
+		    	height: 60px;
+		    	width: 100%;
+		    	margin:4px;
+		    	background-color: gray;
+		    	border: 1px solid black;
+		    }
+	    </style>
+	  </head>
+	  <body>
+	  	<div id="block-container" style="width: 100;">
+
+	  	</div>
+
+	  	<script>
+		  	//Utility method
+		  	NodeList.prototype.forEach = Array.prototype.forEach;
+
+	  		//Populate the blocks
+	  		var blocksFrag = document.createDocumentFragment();
+	  		for(i=0; i <= 10000; i++){
+	  			var div = document.createElement('div');
+				div.id = 'block-'+i;
+				div.className = 'block';
+				blocksFrag.appendChild(div);
+	  		}
+	  		document.getElementById('block-container').appendChild(blocksFrag);
+
+	  		//Appropriate scroll handler
+		  	var lazyScroll = _.debounce(scrollChanged,200);
+	  		if(window.location.href.indexOf('slow') == -1){
+	  			window.onscroll=lazyScroll;
+	  		} else{
+	  			window.onscroll=scrollChanged;
+	  		}
+
+	  		function scrollChanged(e){
+				document.querySelectorAll('.block').forEach(function(element,index){
+					element.style.backgroundImage = 'linear-gradient(45deg, '+ getRandomColor()+', '+ getRandomColor()+')';
+				});
+	  		}
+
+			function getRandomColor() {
+				var letters = '0123456789ABCDEF'.split('');
+				var color = '#';
+				for (var i = 0; i < 6; i++ ) {
+					color += letters[Math.floor(Math.random() * 16)];
+				}
+				var now = new Date().getTime();
+				// while(new Date().getTime() - now  < now + 1){}
+				return color;
+			}
+	    </script>
+	  </body>
+	</html>
+</apex:page>

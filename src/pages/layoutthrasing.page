@@ -1,0 +1,175 @@
+<apex:page docType="html-5.0" standardStylesheets="false" showHeader="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false">
+	<html>
+	  <head>
+	    <meta charset="utf-8"/>
+	    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width"/>
+	    <title>Layout thrashing demo</title>
+
+
+	    <style type="text/css">
+	    	.block{
+	    		width:24px;
+	    		height:24px;
+	    		margin: 4px;
+	    		background-color: gray;
+	    		border: 1px solid black;
+	    		float: left;
+	    	}
+	    </style>
+	  </head>
+	  <body>
+	  	<button id="thrashme">Thrash it</button>
+	  	<button id="smarter">Smarter</button>
+	  	<div id="block-container" style="width: 100%">
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+		  	<div class="block"></div>
+	  	</div>
+
+	  	<script>
+			NodeList.prototype.forEach = Array.prototype.forEach;
+
+		    document.getElementById('thrashme').addEventListener('click',function(e){
+		    	console.time('thrashing');
+		    	document.querySelectorAll('.block').forEach(function(element,index){
+		    		var boundingRect = element.getBoundingClientRect();
+		    		element.style.width=boundingRect.width*2*Math.random()+'px';
+		    	});
+		    	console.timeEnd('thrashing');
+		    });
+
+		    document.getElementById('smarter').addEventListener('click',function(e){
+		    	console.time('smarter');
+		    	var blockNodes = document.querySelectorAll('.block');
+		    	var indexToSizeMap={};
+		    	blockNodes.forEach(function(element,index){
+		    		var boundingRect = element.getBoundingClientRect();
+		    		indexToSizeMap[index]=boundingRect.width;
+		    	});
+
+		    	blockNodes.forEach(function(element,index){
+		    		element.style.width=indexToSizeMap[index]*2*Math.random()+'px';
+		    	});
+		    	console.timeEnd('smarter');
+		    });
+	    </script>
+	  </body>
+	</html>
+</apex:page>
